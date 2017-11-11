@@ -36,15 +36,15 @@ const services = {
             });
             console.log("i : " + i)
             console.log("id : " + id[0])
-            // if (all[0].AddOn[i].length != 0) {
-            //     for (x in all[0].AddOn[i]) {
-            //         console.log(all[0].AddOn[i][x].AddOnNo)
-            //         const b = { orderNo: id[0], addOnNo: all[0].AddOn[i][x].AddOnNo };
-            //         console.log("b")
-            //         console.log(b);
-            //         const addonadd = await knex.insert(b).into('Order_Addon');
-            //     }
-            // }
+            if (all[0].AddOn[i].length != 0) {
+                for (x in all[0].AddOn[i]) {
+                    console.log(all[0].AddOn[i][x].AddOnNo)
+                    const b = { orderNo: id[0], addOnNo: all[0].AddOn[i][x].AddOnNo };
+                    console.log("b")
+                    console.log(b);
+                    const addonadd = await knex.insert(b).into('Order_Addon');
+                }
+            }
             console.log("end addOrder")
         }
     },
