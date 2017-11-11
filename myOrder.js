@@ -49,7 +49,8 @@ exports.showMyOrder = async (billNo) => {
 exports.showUserOrder = async (userNo, role) => {
         try {
                 const billNoArr = await bill.showBill(userNo, role);
-                console.log("billNoArr : "+billNoArr)
+                console.log("billNoArr : "+billNoArr[0])
+                console.log("billNo"+billNoArr[0].billNo)
                 if (billNoArr.length === 0) {
                         return []
                 } else {
