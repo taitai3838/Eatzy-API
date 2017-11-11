@@ -133,19 +133,19 @@ exports.getUserNobyQueCode = async (code) => {
     }
 }
 
-exports.acceptQueue = async (code, role) => {
+exports.acceptQueue = async (code, role, branchNo) => {
     try {
-        const response = await services.acceptQueue(code, role);
-        const user = await services.getUserNobyQueCode(code, role);
+        const response = await services.acceptQueue(code, role, branchNo);
+        const user = await services.getUserNobyQueCode(code, role, branchNo);
         const userNo = user[0].userNo;
-        const billed = await bill.showBill(userNo);
+        const billed = await bill.showBill(userNo, role);
         if (billed.length !== 0) {
             const billNo = billed[0].billNo
             const billCancel = await bill.updateBillStatus(billNo)
             const orderNo = await order.showOrder(billNo)
             if (orderNo.length !== 0) {
                 for (i in orderNo) {
-                    const update = await order.updateOrderStatus(orderNo[i].orderNo, 'cancelled')
+                    const update = await order.updateOrderStatus(orderNo[i].orderNo, 'waiting')
                 }
                 return response;
             }

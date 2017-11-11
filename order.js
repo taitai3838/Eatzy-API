@@ -65,6 +65,8 @@ const services = {
     },
 
     getAllOrder: (branchNo) => {
+        let date = new Date();
+        let current = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
         return knex.select('CustomerTable.branchNo', 'Bill.tableNo', 'Bill.billNo',
             'CustomerOrder.orderNo',
             'Menu.menuNo', 'Menu.menuNameTH', 'CustomerOrder.quantity', 'CustomerOrder.orderStatus', 'CustomerOrder.amount')
@@ -74,8 +76,9 @@ const services = {
             .join('Branch', { 'CustomerTable.branchNo': 'Branch.branchNo' })
             .join('Menu', 'Menu.menuNo', 'CustomerOrder.menuNo')
             .where('Bill.billStatus', 'unpaid')
+            .andWhere('Bill.billDate', current)
             .andWhereNot('CustomerOrder.orderStatus', 'cancelled')
-            .andWhere('CustomerTable.branchNo',branchNo)
+            .andWhere('CustomerTable.branchNo', branchNo)
         // .andWhereNot('CustomerOrder.orderStatus', 'reserved')
     },
     getAllOrderAddon: (orderNo) => {
@@ -143,11 +146,11 @@ exports.addOrder = async (userNo, orders, total, table, role) => {
             bill.updateTotalAmount(newBill[0].billNo, total);
             console.log("update : " + total + " To Bill " + newBill[0].billNo);
             services.addOrder(all, newBill[0].billNo, tableNo);
-            if(!tableNo){
-                console.log("no table : "+tableNo)
+            if (!tableNo) {
+                console.log("no table : " + tableNo)
                 const ab = await services.getOrder(newBill[0].billNo);
-                for(i in ab){
-                await services.updateOrderStatus(ab[i].orderNo,"reserve");
+                for (i in ab) {
+                    await services.updateOrderStatus(ab[i].orderNo, "reserve");
                 }
             }
             console.log("addOrder in newBill pass")
@@ -158,11 +161,11 @@ exports.addOrder = async (userNo, orders, total, table, role) => {
             bill.updateTotalAmount(getBill[0].billNo, total);
             console.log("update : " + total + " To Bill " + getBill[0].billNo);
             services.addOrder(all, getBill[0].billNo, tableNo);
-            if(!tableNo){
-                console.log("no table : "+tableNo)
+            if (!tableNo) {
+                console.log("no table : " + tableNo)
                 const ab = await services.getOrder(getBill[0].billNo);
-                for(i in ab){
-                await services.updateOrderStatus(ab[i].orderNo,"reserve");
+                for (i in ab) {
+                    await services.updateOrderStatus(ab[i].orderNo, "reserve");
                 }
             }
             console.log("addOrder pass")
