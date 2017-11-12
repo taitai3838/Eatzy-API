@@ -39,6 +39,7 @@ const services = {
         let current = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
         return knex('Reservation').count('reserveStatus as status')
             .where('Reservation.reserveStatus', 'reserved')
+            .whereNotNull('Reservation.queCode')
             .andWhere('Reservation.date', current)
             .andWhere('Reservation.branchNo', branchNo)
     },
@@ -49,13 +50,14 @@ const services = {
         const reserveNo = knex.select('Reservation.reserveNo')
             .from('Reservation')
             .where('Reservation.userNo', userNo)
-            .andWhere('reserveRole', 'U')
+            .andWhere('Reservation.reserveRole', 'U')
             .andWhere('Reservation.reserveStatus', 'reserved')
             .andWhere('Reservation.date', current)
             .andWhere('Reservation.branchNo', branchNo)
 
-        return knex('Reservation').count('reserveStatus as status')
+        return knex('Reservation').count('Reservation.reserveStatus as status')
             .where('Reservation.reserveStatus', 'reserved')
+            .whereNotNull('Reservation.queCode')
             .andWhere('Reservation.reserveNo', '<', reserveNo)
             .andWhere('Reservation.date', current)
             .andWhere('Reservation.branchNo', branchNo)
