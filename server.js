@@ -23,10 +23,10 @@ io.on('connection', socket => {
         // const array = []
         if(data === 'reserving') {
             // array.push()
-            this.socket.broadcast.emit('fetch', 'fetchQueue')
+           io.emit('fetch', 'fetchQueue')
         }
         if(data === 'ordering') {
-            socket.broadcast.emit('fetch', 'fetchStatus')
+            io.emit('fetch', 'fetchStatus')
         }
     })
 
@@ -34,7 +34,7 @@ io.on('connection', socket => {
         console.log(`data: ${data}`)
         // const array = []
         if(data === 'numbering') {
-            socket.broadcast.emit('fetch', 'fetchNumber')
+            io.emit('fetch', 'fetchNumber')
         }
     })
 })
