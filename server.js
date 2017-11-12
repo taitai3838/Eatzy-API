@@ -23,12 +23,16 @@ io.on('connection', socket => {
         // const array = []
         if(data === 'reserving') {
             // array.push()
-            socket.broadcast.emit('fetch', 'fetchQueue')
+           io.emit('fetch', 'fetchQueue')
         }
         if(data === 'ordering') {
-            socket.broadcast.emit('fetch', 'fetchStatus')
+            io.emit('fetch', 'fetchStatus')
         }
     })
+    socket.on('check', data => {
+        console.log(`data: ${data}`)
+        // const array = []
+    }) 
 })
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
 server.listen(port, function() {
