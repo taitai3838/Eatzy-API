@@ -21,7 +21,7 @@ const services = {
                         .where('proFromDate' , '<=', current)
                         .andWhere('proToDate' , '>=' ,current)
                         .andWhere('branchNo',branchNo)
-                        .andWhere('isAvaliable',1)
+                        .andWhere('isAvailable',1)
         }
 }
 

@@ -10,6 +10,7 @@ var bill = require('./bill');
 var addon = require('./addon');
 var myOrder = require('./myOrder');
 var restaurant = require('./restaurant');
+var table = require('./customerTable');
 
 
 module.exports = function (app) {
@@ -366,6 +367,13 @@ module.exports = function (app) {
 
     app.get('/group', function (req, res) {
         menuType.menuGroup().then(rest => {
+            res.json(rest);
+        })
+    });
+
+    app.get('/branchTable/:branchNo', function (req, res) {
+        const branchNo = req.params.branchNo;
+        table.getTable(branchNo).then(rest => {
             res.json(rest);
         })
     });

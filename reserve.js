@@ -30,6 +30,7 @@ const services = {
         return knex.select('*')
             .from('Reservation')
             .where('Reservation.date', current)
+            .andWhere('Reservation.reserveStatus', 'reserved')
             .andWhere('Reservation.branchNo', branchNo)
             .andWhere('Reservation.reserveNo', '>', reserveNo)
     },
@@ -72,6 +73,7 @@ const services = {
     callReserveMax: (branchNo) => {
         let date = new Date();
         let current = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+        console.log(date)
         const sub = knex.max('time as t').from('Reservation')
             .whereNotNull('Reservation.queCode')
             .where('Reservation.date', current)
@@ -196,7 +198,7 @@ exports.callReserve = async (branchNo) => {
         if (response.length !== 0) {
             const reserve = response[0].reserveNo
             if (reserve !== null) {
-                const Next = await this.showReserve(reserve, branchNo);
+                const Next = await services.getReserve(reserve, branchNo);
                 console.log(Next)
                 response[0].Next = Next;
                 return response

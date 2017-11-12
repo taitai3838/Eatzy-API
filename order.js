@@ -77,7 +77,7 @@ const services = {
             .join('Menu', 'Menu.menuNo', 'CustomerOrder.menuNo')
             .where('Bill.billStatus', 'unpaid')
             .andWhere('Bill.billDate', current)
-            .andWhereNot('CustomerOrder.orderStatus', 'cancelled')
+            .andWhere('CustomerOrder.orderStatus', 'ready'&'served')
             .andWhere('CustomerTable.branchNo', branchNo)
         // .andWhereNot('CustomerOrder.orderStatus', 'reserved')
     },
