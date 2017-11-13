@@ -45,7 +45,7 @@ const services = {
                         .update('billStatus', status);
         },
         updateTableToBill: (billNo, tableNo) => {
-                knex('Bill')
+                return knex('Bill')
                         .update('tableNo', tableNo)
                         .where('Bill.billNo', billNo)
         },
