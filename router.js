@@ -272,11 +272,12 @@ module.exports = function (app) {
         })
     });
 
-    app.get('/acceptQueue/:code&:role&:branchNo', function (req, res) {
+    app.get('/acceptQueue/:code&:role&:branchNo&:tableNo', function (req, res) {
         const code = req.params.code;
         const role = req.params.role;
         const branchNo = req.params.branchNo;
-        reserve.acceptQueue(code, role, branchNo).then(rest => {
+        const tableNo = req.params.tableNo
+        reserve.acceptQueue(code, role, branchNo, tableNo).then(rest => {
             res.json(rest);
         })
     });

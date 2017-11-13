@@ -134,6 +134,15 @@ exports.addUserNoToBill = async (billNo, userNo) => {
         }
 }
 
+exports.updateTableToBill = async (billNo, tableNo) => {
+        try {
+                const response = await services.updateTableToBill(billNo, tableNo);
+                return response;
+        } catch (err) {
+                console.log(err)
+        }
+}
+
 exports.updateTotalAmount = async (billNo, total) => {
         try {
                 const lastTotal = await services.getLastTotal(billNo);

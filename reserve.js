@@ -86,7 +86,7 @@ const services = {
             .andWhere('Reservation.branchNo', branchNo);
 
     },
-    acceptQueue: (code, rolem, branchNo) => {
+    acceptQueue: (code, role, branchNo) => {
         let date = new Date();
         let current = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
         return knex('Reservation')
@@ -138,7 +138,7 @@ exports.getUserNobyQueCode = async (code) => {
     }
 }
 
-exports.acceptQueue = async (code, role, branchNo) => {
+exports.acceptQueue = async (code, role, branchNo, tableNo) => {
     try {
         const response = await services.acceptQueue(code, role, branchNo);
         const user = await services.getUserNobyQueCode(code, role, branchNo);
@@ -146,6 +146,7 @@ exports.acceptQueue = async (code, role, branchNo) => {
         const billed = await bill.showBill(userNo, role);
         if (billed.length !== 0) {
             const billNo = billed[0].billNo
+            const billTable = await bill.updateTableToBill(billNo, tableNo)
             const orderNo = await order.showOrder(billNo)
             if (orderNo.length !== 0) {
                 for (i in orderNo) {
