@@ -44,10 +44,10 @@ const services = {
                         .where('Bill.billNo', billNo)
                         .update('billStatus', status);
         },
-        updateTableToBill: (No, tableNo) => {
+        updateTableToBill: (billNo, tableNo) => {
                 knex('Bill')
                         .update('tableNo', tableNo)
-                        .where('Bill.billNo', no)
+                        .where('Bill.billNo', billNo)
         },
         addUserNoToBill: (billNo, userNo) => {
                 return knex('Bill')
