@@ -67,7 +67,7 @@ const services = {
     getAllOrder: (branchNo) => {
         let date = new Date();
         let current = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-        return knex.select('CustomerTable.branchNo', 'Bill.tableNo', 'Bill.billNo',
+        return knex.select('CustomerTable.branchNo', 'CustomerTable.tableName', 'Bill.billNo',
             'CustomerOrder.orderNo',
             'Menu.menuNo', 'Menu.menuNameTH', 'CustomerOrder.quantity', 'CustomerOrder.orderStatus', 'CustomerOrder.amount')
             .from('CustomerOrder')

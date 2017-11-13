@@ -86,7 +86,7 @@ const services = {
             .andWhere('Reservation.branchNo', branchNo);
 
     },
-    acceptQueue: (code, role) => {
+    acceptQueue: (code, rolem, branchNo) => {
         let date = new Date();
         let current = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
         return knex('Reservation')
@@ -94,6 +94,7 @@ const services = {
             .andWhere('reserveStatus', 'reserved')
             .andWhere('date', current)
             .andWhere('reserveRole', role)
+            .andWhere('branchNo', branchNo)
             .update('reserveStatus', 'arrived')
     },
     cancelQueue: (code, role, branchNo) => {
@@ -145,7 +146,6 @@ exports.acceptQueue = async (code, role, branchNo) => {
         const billed = await bill.showBill(userNo, role);
         if (billed.length !== 0) {
             const billNo = billed[0].billNo
-            const billCancel = await bill.updateBillStatus(billNo)
             const orderNo = await order.showOrder(billNo)
             if (orderNo.length !== 0) {
                 for (i in orderNo) {
