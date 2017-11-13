@@ -80,7 +80,8 @@ const services = {
             .andWhere('CustomerOrder.orderStatus', 'ready')
             .orWhere('CustomerOrder.orderStatus', 'served')
             .andWhere('CustomerTable.branchNo', branchNo)
-        // .andWhereNot('CustomerOrder.orderStatus', 'reserved')
+            .orderBy('CustomerOrder.orderStatus')
+
     },
     getAllOrderAddon: (orderNo) => {
         return knex.select('Material.matName', 'Addon.price').from('Addon')
